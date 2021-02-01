@@ -6,7 +6,7 @@
 #include <iostream>
 #include <unordered_set>
 #include <pcl/common/common.h>
-#include "processPointClouds.h"
+#include "ros_pointprocess.h"
 #include "sensor_msgs/PointCloud2.h"
 #include "pcl_conversions/pcl_conversions.h"
 #include <pcl_ros/point_cloud.h>
@@ -32,7 +32,7 @@ class Controller
     private:
         ros::NodeHandle m_nh;
 
-        ros::m_PontCloud_callback;
+        ros::Subscriber m_PontCloud_callback;
 
 
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";

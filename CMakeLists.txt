@@ -154,6 +154,15 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/objectrecognition_node.cpp)
+add_executable(imagenode src/ros_control.cpp 
+                        src/ros_node.cpp
+                        src/ros_pointcloud.cpp
+                       
+)
+target_link_libraries(imagenode 
+      ${catkin_LIBRARIES}
+      ${PCL_LIBRARIES}
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

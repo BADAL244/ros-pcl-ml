@@ -15,39 +15,7 @@ void ProcessPointClouds<PointT>::numPoints(typename pcl::PointCloud<PointT>::Ptr
     std::cout << cloud->points.size() << std::endl;
 }
 
- template<typename PointT>
-std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr>
-              ProcessPointClouds<PointT>::RansacPlaneSegment(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceTol)
-{
-  auto startTime = std::chrono::steady_clock::now();
-	srand(time(NULL));
 
-  int num_points = cloud->points.size();
-  auto all_points = cloud->points;
-
-  Ransac<PointT> segRansac(maxIterations, distanceTol, num_points);
-
-  std::unordered_set<int> inliersResult = segRansac.Ransac3d(cloud);
-
-  auto endTime = std::chrono::steady_clock::now();
-  auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
-  std::cout << "local-RANSAC plane segmentation took " << elapsedTime.count() << " milliseconds" << std::endl;
-
-  typename pcl::PointCloud<PointT>::Ptr out_plane(new pcl::PointCloud<PointT>());
-	typename pcl::PointCloud<PointT>::Ptr in_plane(new pcl::PointCloud<PointT>());
-
-  for (int i=0; i<num_points; i++) {
-    PointT pt = all_points[i];
-    if (inliersResult.count(i)) {
-      out_plane->points.push_back(pt);
-    }
-    else {
-      in_plane->points.push_back(pt);
-    }
-  }
-
-  return std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr>(in_plane, out_plane);
-} 
 
 
 template<typename PointT>
@@ -203,26 +171,6 @@ std::vector<typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::C
     return clusters;
 }
 
-/**********************************************************************/
-// template<typename PointT>
-// std::vector<typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::EuclideanClustering(typename pcl::PointCloud<PointT>::Ptr cloud, float clusterTolerance, int minSize, int maxSize)
-// {
-//     // Time clustering process
-//     auto startTime = std::chrono::steady_clock::now();
-
-//     // std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
-
-//     ClusterPts<PointT> clusterPoints(cloud->points.size(), clusterTolerance, minSize, maxSize);
-
-//     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters = clusterPoints.EuclidCluster(cloud);
-
-
-//     auto endTime = std::chrono::steady_clock::now();
-//     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
-//     std::cout << "KDTree clustering took " << elapsedTime.count() << " milliseconds and found " << clusters.size() << " clusters" << std::endl;
-
-//     return clusters;
-// }
 
 
 /**********************************************************************/
@@ -322,27 +270,6 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 }
 /**********************************************************************/
 
-// template<typename PointT>
-// typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::convertPoint(typename pcl::PointCloud<PointT>::Ptr cloud){
-//     typename pcl::PointCloud<PointT>::Ptr msg(new pcl::PointCloud<PointT>);
-//     uint8_t r, g, b;
-
-//     msg->header.frame_id = "zed2_camera_center";
-//     msg->height = cloud->height;
-//     msg->width =  cloud->width;
-
-//     for (size_t i = 0; i < cloud->size (); i++) {
-//     float x_cloud = cloud->points[i].x;
-//     float y_cloud = cloud->points[i].y;
-//     float z_cloud = cloud->points[i].z;
-//     r = cloud->points[i].r;
-//     g = cloud->points[i].g;
-//     b = cloud->points[i].b;
-//     msg->points.push_back (pcl::PointXYZRGB (x_cloud, y_cloud, z_cloud,r , g ,b ));
-//     }
-
-//     return msg;
-// }
 
 
 template<typename PointT>

@@ -1,4 +1,4 @@
-#include "include/objectrecognition/ros_control.h"
+#include "../include/objectrecognition/ros_control.h"
 
 
 int main(int argc , char **argv)

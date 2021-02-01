@@ -14,7 +14,7 @@ Controller::Controller(ros::NodeHandle nh):m_nh(nh){
     m_PontCloud_callback = m_nh.subscribe(point_cloud , 1 , &Controller::callback , this);
 
 
-
+}
 void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
 
 }
