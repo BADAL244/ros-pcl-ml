@@ -21,6 +21,13 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
 )
 
+find_package(OpenCV 4.1 REQUIRED)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIBRARY_DIRS})
+add_definitions(${OpenCV_DEFINITIONS})
+
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
