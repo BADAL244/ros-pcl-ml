@@ -1,5 +1,5 @@
-#ifndef IMAGE_PROCESS_H
-#define IMAGE_PROCESS_H
+#ifndef IMAGE_CONTROL_H
+#define IMAGE_CONTROL_H
 
 #include "ros/ros.h"
 
