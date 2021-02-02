@@ -44,6 +44,9 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
     int clusterId = 0;
     std::vector<pcl::PointCloud<pcl::PointXYZRGB>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud2.second, clusterTolerance, minClusterSize, maxClusterSize);
     // Bounding Boxes around the cluster point cloud
+    
+    objectrecognition::BoundingBoxes3d boxes;
+
 
     for(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cluster : cloudClusters)
     {
@@ -51,6 +54,15 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
         pointProcessorI->numPoints(cluster);
         
         Box box = pointProcessorI->BoundingBox(cluster);
+        objectrecognition::BoundingBox3d bb_box; 
+
+        bb_box.xmin = box.x_min;
+        bb_box.xmax = box.x_max;
+        bb_box.ymin = box.y_min;
+        bb_box.ymax = box.y_max;
+        bb_box.zmin = box.z_min;
+        bb_box.zmax = box.z_max;
+        boxes.bounding_boxes.push_back(bb_box);
     
         ++clusterId;
     }
