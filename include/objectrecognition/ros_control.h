@@ -33,6 +33,14 @@ class Controller
         ros::NodeHandle m_nh;
 
         ros::Subscriber m_PontCloud_callback;
+        float filterRes = 0.01;                                       
+        Eigen::Vector4f minPoint = Eigen::Vector4f(0 , -.4 , -1, 1);
+
+        Eigen::Vector4f maxPoint = Eigen::Vector4f(2, .4 , 1 ,  1);
+        int maxIter = 500;
+        float clusterTolerance = 1;
+        int minClusterSize = 700;
+        int maxClusterSize = 2000;
 
 
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";
