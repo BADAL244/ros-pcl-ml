@@ -12,6 +12,7 @@
 Controller::Controller(ros::NodeHandle nh):m_nh(nh){
 
     m_PontCloud_callback = m_nh.subscribe(point_cloud , 1 , &Controller::callback , this);
+    markers_pub_ = nh.advertise<visualization_msgs::MarkerArray>( "visualization_marker", 0 );
 
 
 }
@@ -66,4 +67,43 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
     
         ++clusterId;
     }
+}
+
+
+//Marker creation function for Bounding Boxes visualization in rviz
+void Controller::display_marker(objectrecognition::BoundingBoxes3d& boxes){
+    visualization_msgs::MarkerArray msg;
+
+  int counter_id = 0;
+  for (auto bb : boxes.bounding_boxes) {
+    visualization_msgs::Marker bbx_marker;
+
+    bbx_marker.header.frame_id = "zed2_camera_center";
+    bbx_marker.header.stamp = boxes.header.stamp;
+    bbx_marker.ns = "box";
+    bbx_marker.id = counter_id++;
+    bbx_marker.type = visualization_msgs::Marker::CUBE;
+    bbx_marker.action = visualization_msgs::Marker::ADD;
+    bbx_marker.frame_locked = false;
+    bbx_marker.pose.position.x = (bb.xmax + bb.xmin) / 2.0;
+    bbx_marker.pose.position.y = (bb.ymax + bb.ymin) / 2.0;
+    bbx_marker.pose.position.z = (bb.zmax + bb.zmin) / 2.0;
+    bbx_marker.pose.orientation.x = 0.0;
+    bbx_marker.pose.orientation.y = 0.0;
+    bbx_marker.pose.orientation.z = 0.0;
+    bbx_marker.pose.orientation.w = 1.0;
+    bbx_marker.scale.x = (bb.xmax - bb.xmin);
+    bbx_marker.scale.y = (bb.ymax - bb.ymin);
+    bbx_marker.scale.z = (bb.zmax - bb.zmin);
+    bbx_marker.color.b = 0;
+    bbx_marker.color.g = bb.probability * 255.0;
+    bbx_marker.color.r = (1.0 - bb.probability) * 255.0;
+    bbx_marker.color.a = 0.4;
+    
+    bbx_marker.text = bb.object_name;
+
+    msg.markers.push_back(bbx_marker);
+  }
+
+ markers_pub_.publish(msg);
 }

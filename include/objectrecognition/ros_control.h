@@ -16,7 +16,8 @@
 #include <pcl_ros/transforms.h>
 #include "objectrecognition/BoundingBox3d.h"
 #include "objectrecognition/BoundingBoxes3d.h"
-
+#include <visualization_msgs/MarkerArray.h>
+#include <visualization_msgs/Marker.h>
 #include <pcl/features/normal_3d.h>
 
 using namespace std;
@@ -29,7 +30,10 @@ class Controller
 
         void callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg );
 
-        
+        //marker creation for visualization of bounding boxes in rviz 
+        //@param BoundingBoxes3d
+
+        void display_marker(objectrecognition::BoundingBoxes3d& boxes); 
     private:
         ros::NodeHandle m_nh;
 
@@ -45,6 +49,8 @@ class Controller
 
 
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";
+        //Marker publisher MarkerArray
+        ros::Publisher markers_pub_;
 
         
 
