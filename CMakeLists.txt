@@ -67,11 +67,11 @@ find_package(Eigen3 REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+   FILES
+    BoundingBox3d.msg
+    BoundingBoxes3d.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -88,10 +88,10 @@ find_package(Eigen3 REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs#   visualization_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -159,6 +159,8 @@ add_executable(imagenode src/ros_control.cpp
                         src/ros_pointcloud.cpp
                        
 )
+add_dependencies(imagenode objectrecognition_generate_messages_cpp)
+
 target_link_libraries(imagenode 
       ${catkin_LIBRARIES}
       ${PCL_LIBRARIES}

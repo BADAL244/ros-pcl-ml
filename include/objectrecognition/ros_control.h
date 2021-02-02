@@ -14,7 +14,8 @@
 #include <pcl/point_types.h>
 #include <pcl/conversions.h>
 #include <pcl_ros/transforms.h>
-
+#include "objectrecognition/BoundingBox3d.h"
+#include "objectrecognition/BoundingBoxes3d.h"
 
 #include <pcl/features/normal_3d.h>
 
