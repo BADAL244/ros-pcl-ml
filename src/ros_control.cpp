@@ -107,3 +107,33 @@ void Controller::display_marker(objectrecognition::BoundingBoxes3d& boxes){
 
  markers_pub_.publish(msg);
 }
+
+
+bool Controller::getNormalsReq(objectrecognition::GetNormals::Request &req, objectrecognition::GetNormals::Response &rsp)
+  {
+    rsp.cluster = req.cluster;
+
+    pcl::PointCloud<pcl::PointXYZ> *p_cloud = new pcl::PointCloud<pcl::PointXYZ>();
+    const boost::shared_ptr<pcl::PointCloud<pcl::PointXYZ> > sp_pcl_cloud(p_cloud);
+    pcl::fromROSMsg(req.cluster, *p_cloud);
+
+    // Create the normal estimation class, and pass the input dataset to it
+    pcl::NormalEstimation<pcl::PointXYZ, pcl::Normal> ne;
+    ne.setInputCloud (sp_pcl_cloud);
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ> ());
+    ne.setSearchMethod (tree);
+    
+    // Use all neighbors in a sphere of radius 3cm
+    ne.setRadiusSearch(0.01);
+
+    // Output datasets
+    pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(new pcl::PointCloud<pcl::Normal>);
+
+    // Compute the features
+    ne.compute(*cloud_normals);
+
+    pcl::toROSMsg(*cloud_normals, rsp.cluster);
+
+
+    return true;
+  }

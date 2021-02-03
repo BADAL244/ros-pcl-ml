@@ -19,7 +19,7 @@
 #include <visualization_msgs/MarkerArray.h>
 #include <visualization_msgs/Marker.h>
 #include <pcl/features/normal_3d.h>
-
+#include "objectrecognition/GetNormals.h"
 using namespace std;
 
 class Controller
@@ -34,6 +34,9 @@ class Controller
         //@param BoundingBoxes3d
 
         void display_marker(objectrecognition::BoundingBoxes3d& boxes); 
+
+
+        bool getNormalsReq(objectrecognition::GetNormals::Request &req, objectrecognition::GetNormals::Response &rsp);
     private:
         ros::NodeHandle m_nh;
 
@@ -52,7 +55,7 @@ class Controller
         //Marker publisher MarkerArray
         ros::Publisher markers_pub_;
 
-        
+        ros::ServiceServer get_normals_srv_;
 
 
 };
