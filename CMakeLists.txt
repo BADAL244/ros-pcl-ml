@@ -33,6 +33,9 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 find_package(Eigen3 REQUIRED)
+
+
+catkin_python_setup()
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
