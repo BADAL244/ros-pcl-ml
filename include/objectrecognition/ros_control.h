@@ -49,8 +49,8 @@ class Controller
         float clusterTolerance = 1;
         int minClusterSize = 700;
         int maxClusterSize = 2000;
-
-
+        ros::Publisher pub1;
+        ros::Publisher pub2;
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";
         //Marker publisher MarkerArray
         ros::Publisher markers_pub_;

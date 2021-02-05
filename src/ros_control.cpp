@@ -13,6 +13,8 @@ Controller::Controller(ros::NodeHandle nh):m_nh(nh){
 
     m_PontCloud_callback = m_nh.subscribe(point_cloud , 1 , &Controller::callback , this);
     markers_pub_ = nh.advertise<visualization_msgs::MarkerArray>( "visualization_marker", 0 );
+    pub1 = nh.advertise<sensor_msgs::PointCloud2> ("Non_plane", 1);
+    pub2 = nh.advertise<sensor_msgs::PointCloud2> ("Plane_surface", 1);
 
 
 }
@@ -67,6 +69,11 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
     
         ++clusterId;
     }
+
+
+    pub1.publish(cloud1);
+
+    pub2.publish(cloud2);
 }
 
 
