@@ -15,7 +15,7 @@ Controller::Controller(ros::NodeHandle nh):m_nh(nh){
     markers_pub_ = nh.advertise<visualization_msgs::MarkerArray>( "visualization_marker", 0 );
     pub1 = nh.advertise<sensor_msgs::PointCloud2> ("Non_plane", 1);
     pub2 = nh.advertise<sensor_msgs::PointCloud2> ("Plane_surface", 1);
-
+    get_normals_srv_ = nh.advertiseService("get_normals", &Controller::getNormalsReq, this);
 
 }
 void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
