@@ -181,7 +181,7 @@ bool Controller::getNormalsReq(objectrecognition::GetNormals::Request &req, obje
     viewer.close();
     
 
-    imagecontrol::GetCloud cld;
+    objectrecognition::GetCloud cld;
     pcl::toROSMsg(*cloud_normals, cld.cloud);
     cld.cloud.header.frame_id = "zed2_camera_center";
     std::cout << " i m  publishing"  << std::endl;

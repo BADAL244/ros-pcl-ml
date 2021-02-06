@@ -20,7 +20,7 @@
 #include "box.h"
 #include <unordered_set>
 #include <math.h>
-
+#include "../src/ransac.cpp"
 #include <pcl_conversions/pcl_conversions.h>
 
 #include <sensor_msgs/PointCloud2.h>

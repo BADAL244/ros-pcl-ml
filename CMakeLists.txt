@@ -162,6 +162,7 @@ include_directories(
 add_executable(imagenode src/ros_control.cpp 
                         src/ros_node.cpp
                         src/ros_pointcloud.cpp
+                        src/ransac.cpp
                        
 )
 add_dependencies(imagenode objectrecognition_generate_messages_cpp)
