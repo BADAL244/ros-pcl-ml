@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+	<node pkg="objectrecognition" type="point_cloud.py" name="point_cloud" output="screen"/>
+</launch>
