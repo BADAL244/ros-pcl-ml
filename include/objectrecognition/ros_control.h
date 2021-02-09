@@ -56,7 +56,7 @@ class Controller
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";
         //Marker publisher MarkerArray
         ros::Publisher markers_pub_;
-
+        ros::Publisher cloudvector;
         ros::ServiceServer get_normals_srv_;
 
 

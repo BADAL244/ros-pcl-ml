@@ -16,6 +16,7 @@ Controller::Controller(ros::NodeHandle nh):m_nh(nh){
     pub1 = nh.advertise<sensor_msgs::PointCloud2> ("Non_plane", 1);
     pub2 = nh.advertise<sensor_msgs::PointCloud2> ("Plane_surface", 1);
     get_normals_srv_ = nh.advertiseService("get_normals", &Controller::getNormalsReq, this);
+    cloudvector = nh.advertise<objectrecognition::vecpointcloud>("merged_clouds_topic", 1);
 
 }
 void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
@@ -68,6 +69,7 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
         bb_box.zmax = box.z_max;
         boxes.bounding_boxes.push_back(bb_box);
         vector_cloud.pointclouds.push_back(cloud3);
+        cloudvector.publish(vector_cloud);
         ++clusterId;
     }
 
