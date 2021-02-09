@@ -58,7 +58,8 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
         
         Box box = pointProcessorI->BoundingBox(cluster);
         objectrecognition::BoundingBox3d bb_box; 
-
+        auto cloud3 = pointProcessorI->conversion(cluster);
+        objectrecognition::vectorpointcloud vector_cloud;
         bb_box.xmin = box.x_min;
         bb_box.xmax = box.x_max;
         bb_box.ymin = box.y_min;
@@ -66,7 +67,7 @@ void Controller::callback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg){
         bb_box.zmin = box.z_min;
         bb_box.zmax = box.z_max;
         boxes.bounding_boxes.push_back(bb_box);
-    
+        vector_cloud.pointclouds.push_back(cloud3);
         ++clusterId;
     }
 

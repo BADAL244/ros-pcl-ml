@@ -74,6 +74,7 @@ add_message_files(
    FILES
     BoundingBox3d.msg
     BoundingBoxes3d.msg
+    vectorpointcloud.msg
 )
 
 add_service_files(

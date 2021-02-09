@@ -20,6 +20,8 @@
 #include <visualization_msgs/Marker.h>
 #include <pcl/features/normal_3d.h>
 #include "objectrecognition/GetNormals.h"
+
+#include "objectrecognition/vectorpointcloud.h"
 using namespace std;
 
 class Controller
