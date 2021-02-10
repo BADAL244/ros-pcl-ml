@@ -75,6 +75,8 @@ add_message_files(
     BoundingBox3d.msg
     BoundingBoxes3d.msg
     vectorpointcloud.msg
+    DetectedObject.msg
+    DetectedObjectsArray.msg
 )
 
 add_service_files(
