@@ -77,6 +77,7 @@ add_message_files(
     vectorpointcloud.msg
     DetectedObject.msg
     DetectedObjectsArray.msg
+    GetCloud.msg
 )
 
 add_service_files(
