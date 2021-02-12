@@ -20,7 +20,7 @@
 #include <visualization_msgs/Marker.h>
 #include <pcl/features/normal_3d.h>
 #include "objectrecognition/GetNormals.h"
-
+#include "objectrecognition/GetCloud.h"
 #include "objectrecognition/vectorpointcloud.h"
 using namespace std;
 
@@ -39,6 +39,8 @@ class Controller
 
 
         bool getNormalsReq(objectrecognition::GetNormals::Request &req, objectrecognition::GetNormals::Response &rsp);
+
+        void callbackNorm(const sensor_msgs::PointCloud2ConstPtr& cloud_msg);
     private:
         ros::NodeHandle m_nh;
 
@@ -53,6 +55,7 @@ class Controller
         int maxClusterSize = 2000;
         ros::Publisher pub1;
         ros::Publisher pub2;
+        ros::Publisher pub4;
         const std::string point_cloud = "/zed2/zed_node/point_cloud/cloud_registered";
         //Marker publisher MarkerArray
         ros::Publisher markers_pub_;

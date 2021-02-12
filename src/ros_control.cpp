@@ -147,3 +147,8 @@ bool Controller::getNormalsReq(objectrecognition::GetNormals::Request &req, obje
 
     return true;
   }
+
+
+    void Controller::callbackNorm(const sensor_msgs::PointCloud2ConstPtr& Norm_msg){
+
+    }
