@@ -151,4 +151,41 @@ bool Controller::getNormalsReq(objectrecognition::GetNormals::Request &req, obje
 
     void Controller::callbackNorm(const sensor_msgs::PointCloud2ConstPtr& Norm_msg){
 
+    pcl::PCLPointCloud2 pcl_pc2;
+    pcl_conversions::toPCL(*Norm_msg,pcl_pc2);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr Norm_cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::fromPCLPointCloud2(pcl_pc2,*Norm_cloud);
+
+
+    pcl::NormalEstimation<pcl::PointXYZ, pcl::Normal> ne;
+    ne.setInputCloud (Norm_cloud);
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ> ());
+    ne.setSearchMethod (tree);
+    
+    // Use all neighbors in a sphere of radius 3cm
+    ne.setRadiusSearch(0.01);
+
+    // Output datasets
+    pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(new pcl::PointCloud<pcl::Normal>);
+
+    // Compute the features
+    ne.compute(*cloud_normals);
+    pcl::visualization::PCLVisualizer viewer("PCL Viewer");
+    viewer.setBackgroundColor (0.0, 0.0, 0.5);
+    viewer.addPointCloudNormals<pcl::PointXYZ,pcl::Normal>(Norm_cloud, cloud_normals);
+    
+    
+    
+      
+    viewer.spinOnce ();
+    viewer.close();
+    
+
+    imagecontrol::GetCloud cld;
+    pcl::toROSMsg(*cloud_normals, cld.cloud);
+    cld.cloud.header.frame_id = "zed2_camera_center";
+    std::cout << " i m  publishing"  << std::endl;
+    pub4.publish(cld.cloud); 
+    std::cout << "published" << std::endl;
+
     }
