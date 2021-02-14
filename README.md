@@ -87,7 +87,30 @@ ros_control.h file
 
 const std::string point_cloud name to your point cloud2 topic name for detection purpose
 ```
-        const std::string point_cloud = "your PointCloud2 Topic Name ";
+const std::string point_cloud = "your PointCloud2 Topic Name "
 ```
+<b>ros_pointcloud.cpp include code for</b>:
+```
+1.filtering 
+2.segmentation based on Ransac
+3.clustering 
+4.Bounding Box around the cluster 
+5.surface Normal calcualtion 
+6.conversion form ros_msg to pcl_msg and vice -versa
+```
+```
+$ roslaunch objectrecognition segmentation.launch
+```
+
+this provide a crop BOx filter based Point Cloud based on setting in X Y Z direction for range selection 
+
+```
+$ roslaunch objectrecogntion Trainning.launch 
+```
+used for Trainnig Differnt model like Stair , chair and other Indoor object based on their colour histrogram and surface normal histogram for SVM-SVC Trainnig for creation of a Trainned Model to estimate the correct label for each object .
+
+
+
+
 
 
