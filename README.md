@@ -109,8 +109,10 @@ $ roslaunch objectrecogntion Trainning.launch
 ```
 used for Trainnig Differnt model like Stair , chair and other Indoor object based on their colour histrogram and surface normal histogram for SVM-SVC Trainnig for creation of a Trainned Model to estimate the correct label for each object .
 
+installing Bazel and MediaPipe 
 
+https://www.forecr.io/blogs/installation/how-to-install-bazel
 
-
+https://www.forecr.io/blogs/ai-algorithms/how-to-download-build-mediapipe-on-nvidia-jetson-xavier-nx
 
 
