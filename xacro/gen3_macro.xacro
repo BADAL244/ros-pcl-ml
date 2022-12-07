@@ -4,7 +4,7 @@
 
   <!-- Propagate last link name information because it is the gripper's parent link -->
   <xacro:property name="last_arm_link" value="end_effector_link"/>
-  <xacro:property name="M_PI" value="3.14159" />
+  <xacro:property name="M_PI" value="3.14"/>
   <xacro:macro name="load_arm" params="parent:='' dof vision prefix *origin">
       <link name="${prefix}base_link">
         <inertial>
@@ -319,8 +319,19 @@
         <parent link="${prefix}end_effector_link" />
         <child  link="${prefix}camera_link" />
       </joint>
-      
-      <link name="${prefix}newcamera_link">
+      <link name="${prefix}camera_depth_frame" />
+      <joint name="${prefix}depth_module" type="fixed">
+        <origin xyz="0.0275 0.066 -0.00305" rpy="3.14159265358979 3.14159265358979 0" />
+        <parent link="${prefix}end_effector_link" />
+        <child  link="${prefix}camera_depth_frame" />
+      </joint>
+      <link name="${prefix}camera_color_frame" />
+      <joint name="${prefix}color_module" type="fixed">
+        <origin xyz="0 0.05639 -0.00305" rpy="3.14159265358979 3.14159265358979 0" />
+        <parent link="${prefix}end_effector_link" />
+        <child  link="${prefix}camera_color_frame" />
+      </joint>
+    <link name="${prefix}newcamera_link">
         <pose>0 0 0 1.54 0 0</pose>
 
     <inertial>
@@ -348,59 +359,44 @@
     </visual>
   </link>
       <joint name="${prefix}camera_module_new" type="fixed">
-        <origin xyz="-0.3 -0.4 1.0" rpy="${-M_PI / 2.0} 0 ${-M_PI / 2.0}" />
+        <!-- <origin xyz="-0.3 -0.4 1.0" rpy="${-M_PI} 0 0" /> -->
+        <origin xyz="-0.3 -0.4 1.0" rpy="0 ${M_PI/2} ${M_PI/2}" />
         <parent link="${prefix}base_link" />
         <child  link="${prefix}newcamera_link" />
       </joint>
-      <link name="${prefix}camera_depth_frame" />
-      <joint name="${prefix}depth_module" type="fixed">
-        <origin xyz="0.0275 0.066 -0.00305" rpy="3.14159265358979 3.14159265358979 0" />
-        <parent link="${prefix}end_effector_link" />
-        <child  link="${prefix}camera_depth_frame" />
-      </joint>
-      <link name="${prefix}camera_color_frame" />
-      <joint name="${prefix}color_module" type="fixed">
-        <origin xyz="0 0.05639 -0.00305" rpy="3.14159265358979 3.14159265358979 0" />
-        <parent link="${prefix}end_effector_link" />
-        <child  link="${prefix}camera_color_frame" />
-      </joint>
-          <gazebo reference="${prefix}newcamera_link">
-          <sensor type="camera" name="camera1">
-          <update_rate>30.0</update_rate>
-         <camera name="head">
-          <horizontal_fov>1.3962634</horizontal_fov>
-          <image>
-            <width>800</width>
-            <height>800</height>
-            <format>R8G8B8</format>
-          </image>
-          <clip>
-            <near>0.02</near>
-            <far>300</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <alwaysOn>true</alwaysOn>
-          <updateRate>0.0</updateRate>
-          <cameraName>${prefix}/newcamera</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>${prefix}/newcamera_link</frameName>
-          <hackBaseline>0.07</hackBaseline>
-          <distortionK1>0.0</distortionK1>
-          <distortionK2>0.0</distortionK2>
-          <distortionK3>0.0</distortionK3>
-          <distortionT1>0.0</distortionT1>
-          <distortionT2>0.0</distortionT2>
-        </plugin>
-        </sensor>
-      </gazebo>
-    </xacro:if>
+    <gazebo reference="${prefix}newcamera_link">
+    <sensor name="xtion" type="depth">
+      <update_rate>20</update_rate>
+      <camera>
+        <horizontal_fov>1.09606677025</horizontal_fov>
+        <image>
+          <format>R8G8B8</format>
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip>
+          <near>0.5</near>
+          <far>4</far>
+        </clip>
+      </camera>
+      <plugin filename="libgazebo_ros_openni_kinect.so" name="xtion_camera_controller">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>20</updateRate>
+        <imageTopicName>xtion/rgb/image_raw</imageTopicName>
+        <cameraInfoTopicName>xtion/rgb/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>xtion/depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>xtion/depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>xtion/depth/points</pointCloudTopicName>
+        <frameName>${prefix}/newcamera_link</frameName>
+        <distortion_k1>0.0</distortion_k1>
+        <distortion_k2>0.0</distortion_k2>
+        <distortion_k3>0.0</distortion_k3>
+        <distortion_t1>0.0</distortion_t1>
+        <distortion_t2>0.0</distortion_t2>
+      </plugin>
+    </sensor>
+  </gazebo>
 
+    </xacro:if>
   </xacro:macro>
 </robot>
