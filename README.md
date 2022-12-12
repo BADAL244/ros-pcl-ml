@@ -115,4 +115,4 @@ https://www.forecr.io/blogs/installation/how-to-install-bazel
 
 https://www.forecr.io/blogs/ai-algorithms/how-to-download-build-mediapipe-on-nvidia-jetson-xavier-nx
 https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html
-
+https://towardsdatascience.com/create-virtual-environment-using-virtualenv-and-add-it-to-jupyter-notebook-6e1bf4e03415
