@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="topic_in"  default="/os_node/points" />
+  <arg name="topic_out" default="/ouster/points/filtered" />
+
+  <node name="ouster_points_filter" pkg="topic_tools" type="transform"
+        args="$(arg topic_in) $(arg topic_out)
+              sensor_msgs/PointCloud2                                            
+              'sensor_msgs.msg.PointCloud2(header=std_msgs.msg.Header(stamp=rospy.Time.now(), frame_id=m.header.frame_id), 
+                                           height=m.height, width=m.width, fields=m.fields, is_bigendian=m.is_bigendian,
+                                           point_step=m.point_step, row_step=m.row_step, data=m.data, is_dense=m.is_dense)'
+                                           --import sensor_msgs std_msgs rospy"/>
+
+</launch>
