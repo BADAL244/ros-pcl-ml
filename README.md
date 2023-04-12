@@ -119,3 +119,4 @@ https://towardsdatascience.com/create-virtual-environment-using-virtualenv-and-a
 
 
 https://developer.nvidia.com/cuda-gpus
+https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html
