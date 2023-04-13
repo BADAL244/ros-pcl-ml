@@ -124,3 +124,5 @@ https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/
 
 
 https://github.com/pytorch/pytorch/issues/50032
+
+https://www.zhaoyabo.com/?p=8291#Linux_and_Windows-10
