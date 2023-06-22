@@ -126,3 +126,10 @@ https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/
 https://github.com/pytorch/pytorch/issues/50032
 
 https://www.zhaoyabo.com/?p=8291#Linux_and_Windows-10
+
+
+
+ros2 issues list
+https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros/issues/21
+https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros/issues/24
+https://github.com/ros-perception/vision_opencv/blob/rolling/cv_bridge/CMakeLists.txt
